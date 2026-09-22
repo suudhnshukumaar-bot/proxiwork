@@ -23,7 +23,7 @@ interface AuthContextValue {
     email: string,
     password: string,
     role: 'worker' | 'employer',
-  ) => Promise<{ error: Error | null }>;
+  ) => Promise<{ error: Error | null; userId: string | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Async IIFE keeps the subscription handler synchronous while still
     // letting us await the initial session lookup safely.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (_event, session) => {
         (async () => {
           const currentUser = session?.user ?? null;
           setUser(currentUser);
@@ -106,14 +106,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       password: string,
       role: 'worker' | 'employer',
     ) => {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: { role },
         },
       });
-      return { error: error as Error | null };
+      return { error: error as Error | null, userId: data.user?.id ?? null };
     },
     [],
   );

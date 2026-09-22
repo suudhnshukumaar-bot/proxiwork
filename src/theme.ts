@@ -5,10 +5,10 @@ let theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0F3460',
+      main: '#0F3460', // dark blue
     },
     secondary: {
-      main: '#00B4A6',
+      main: '#FFC107', // bold yellow
     },
     background: {
       default: '#F8FAFC',

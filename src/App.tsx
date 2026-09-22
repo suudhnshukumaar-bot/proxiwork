@@ -1,36 +1,11 @@
-import React, { Suspense, useContext } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import theme from './theme';
-
-// ─── Context Imports ──────────────────────────────────────────────────────────
-// AuthContext and NotificationContext are expected to be provided by the app.
-// They are imported lazily-safe here; if they don't exist yet placeholders are used.
-let AuthContext: React.Context<{
-  user: { role?: string } | null;
-  loading?: boolean;
-}>;
-let NotificationContext: React.Context<unknown>;
-
-try {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  AuthContext = require('./contexts/AuthContext').AuthContext;
-} catch {
-  AuthContext = React.createContext<{ user: { role?: string } | null; loading?: boolean }>({
-    user: null,
-    loading: false,
-  });
-}
-
-try {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  NotificationContext = require('./contexts/NotificationContext').NotificationContext;
-} catch {
-  NotificationContext = React.createContext(null);
-}
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // ─── Lazy Page Imports ────────────────────────────────────────────────────────
 
@@ -62,7 +37,7 @@ const Applicants          = React.lazy(() => import('./pages/employer/Applicants
 const EmployerProfilePage = React.lazy(() => import('./pages/employer/EmployerProfilePage'));
 const EmployerRatings     = React.lazy(() => import('./pages/employer/EmployerRatings'));
 
-// Shared (used by both worker and employer routes)
+// Shared
 const Notifications = React.lazy(() => import('./pages/Notifications'));
 
 // Admin
@@ -106,7 +81,7 @@ const ROLE_DASHBOARDS: Record<Role, string> = {
 };
 
 function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
-  const { user, loading } = useContext(AuthContext);
+  const { user, profile, loading } = useAuth();
 
   // Still resolving auth state
   if (loading) {
@@ -118,7 +93,7 @@ function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />;
   }
 
-  const userRole = user.role as Role | undefined;
+  const userRole = profile?.role as Role | undefined;
 
   // Role mismatch → redirect to the user's own dashboard
   if (requiredRole && userRole && userRole !== requiredRole) {
@@ -135,54 +110,52 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AuthContext.Provider value={{ user: null, loading: false }}>
-        <NotificationContext.Provider value={null}>
-          <BrowserRouter>
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                {/* ── Public ──────────────────────────────────────────── */}
-                <Route path="/"               element={<LandingPage />} />
-                <Route path="/login"          element={<LoginPage />} />
-                <Route path="/signup"         element={<SignupPage />} />
-                <Route path="/signup/worker"  element={<SignupPage role="worker" />} />
-                <Route path="/signup/employer"element={<SignupPage role="employer" />} />
-                <Route path="/forgot-password"element={<ForgotPasswordPage />} />
-                <Route path="/verify-email"   element={<VerifyEmailPage />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* ── Public ──────────────────────────────────────────── */}
+              <Route path="/"               element={<LandingPage />} />
+              <Route path="/login"          element={<LoginPage />} />
+              <Route path="/signup"         element={<SignupPage />} />
+              <Route path="/signup/worker"  element={<SignupPage />} />
+              <Route path="/signup/employer"element={<SignupPage />} />
+              <Route path="/forgot-password"element={<ForgotPasswordPage />} />
+              <Route path="/verify-email"   element={<VerifyEmailPage />} />
 
-                {/* ── Worker ──────────────────────────────────────────── */}
-                <Route path="/worker/onboarding"   element={<ProtectedRoute requiredRole="worker"><WorkerOnboarding /></ProtectedRoute>} />
-                <Route path="/worker/dashboard"    element={<ProtectedRoute requiredRole="worker"><WorkerDashboard /></ProtectedRoute>} />
-                <Route path="/worker/jobs"         element={<ProtectedRoute requiredRole="worker"><NearbyJobs /></ProtectedRoute>} />
-                <Route path="/worker/jobs/:id"     element={<ProtectedRoute requiredRole="worker"><JobDetailPage /></ProtectedRoute>} />
-                <Route path="/worker/applications" element={<ProtectedRoute requiredRole="worker"><MyApplications /></ProtectedRoute>} />
-                <Route path="/worker/my-jobs"      element={<ProtectedRoute requiredRole="worker"><MyJobs /></ProtectedRoute>} />
-                <Route path="/worker/earnings"     element={<ProtectedRoute requiredRole="worker"><Earnings /></ProtectedRoute>} />
-                <Route path="/worker/ratings"      element={<ProtectedRoute requiredRole="worker"><WorkerRatings /></ProtectedRoute>} />
-                <Route path="/worker/profile"      element={<ProtectedRoute requiredRole="worker"><WorkerProfilePage /></ProtectedRoute>} />
-                <Route path="/worker/notifications"element={<ProtectedRoute requiredRole="worker"><Notifications /></ProtectedRoute>} />
+              {/* ── Worker ──────────────────────────────────────────── */}
+              <Route path="/worker/onboarding"   element={<ProtectedRoute requiredRole="worker"><WorkerOnboarding /></ProtectedRoute>} />
+              <Route path="/worker/dashboard"    element={<ProtectedRoute requiredRole="worker"><WorkerDashboard /></ProtectedRoute>} />
+              <Route path="/worker/jobs"         element={<ProtectedRoute requiredRole="worker"><NearbyJobs /></ProtectedRoute>} />
+              <Route path="/worker/jobs/:id"     element={<ProtectedRoute requiredRole="worker"><JobDetailPage /></ProtectedRoute>} />
+              <Route path="/worker/applications" element={<ProtectedRoute requiredRole="worker"><MyApplications /></ProtectedRoute>} />
+              <Route path="/worker/my-jobs"      element={<ProtectedRoute requiredRole="worker"><MyJobs /></ProtectedRoute>} />
+              <Route path="/worker/earnings"     element={<ProtectedRoute requiredRole="worker"><Earnings /></ProtectedRoute>} />
+              <Route path="/worker/ratings"      element={<ProtectedRoute requiredRole="worker"><WorkerRatings /></ProtectedRoute>} />
+              <Route path="/worker/profile"      element={<ProtectedRoute requiredRole="worker"><WorkerProfilePage /></ProtectedRoute>} />
+              <Route path="/worker/notifications"element={<ProtectedRoute requiredRole="worker"><Notifications /></ProtectedRoute>} />
 
-                {/* ── Employer ────────────────────────────────────────── */}
-                <Route path="/employer/onboarding"       element={<ProtectedRoute requiredRole="employer"><EmployerOnboarding /></ProtectedRoute>} />
-                <Route path="/employer/dashboard"        element={<ProtectedRoute requiredRole="employer"><EmployerDashboard /></ProtectedRoute>} />
-                <Route path="/employer/post-job"         element={<ProtectedRoute requiredRole="employer"><PostJob /></ProtectedRoute>} />
-                <Route path="/employer/jobs"             element={<ProtectedRoute requiredRole="employer"><EmployerJobs /></ProtectedRoute>} />
-                <Route path="/employer/jobs/:id"         element={<ProtectedRoute requiredRole="employer"><EmployerJobDetail /></ProtectedRoute>} />
-                <Route path="/employer/applicants/:jobId"element={<ProtectedRoute requiredRole="employer"><Applicants /></ProtectedRoute>} />
-                <Route path="/employer/profile"          element={<ProtectedRoute requiredRole="employer"><EmployerProfilePage /></ProtectedRoute>} />
-                <Route path="/employer/notifications"    element={<ProtectedRoute requiredRole="employer"><Notifications /></ProtectedRoute>} />
-                <Route path="/employer/ratings"          element={<ProtectedRoute requiredRole="employer"><EmployerRatings /></ProtectedRoute>} />
+              {/* ── Employer ────────────────────────────────────────── */}
+              <Route path="/employer/onboarding"       element={<ProtectedRoute requiredRole="employer"><EmployerOnboarding /></ProtectedRoute>} />
+              <Route path="/employer/dashboard"        element={<ProtectedRoute requiredRole="employer"><EmployerDashboard /></ProtectedRoute>} />
+              <Route path="/employer/post-job"         element={<ProtectedRoute requiredRole="employer"><PostJob /></ProtectedRoute>} />
+              <Route path="/employer/jobs"             element={<ProtectedRoute requiredRole="employer"><EmployerJobs /></ProtectedRoute>} />
+              <Route path="/employer/jobs/:id"         element={<ProtectedRoute requiredRole="employer"><EmployerJobDetail /></ProtectedRoute>} />
+              <Route path="/employer/applicants/:jobId"element={<ProtectedRoute requiredRole="employer"><Applicants /></ProtectedRoute>} />
+              <Route path="/employer/profile"          element={<ProtectedRoute requiredRole="employer"><EmployerProfilePage /></ProtectedRoute>} />
+              <Route path="/employer/notifications"    element={<ProtectedRoute requiredRole="employer"><Notifications /></ProtectedRoute>} />
+              <Route path="/employer/ratings"          element={<ProtectedRoute requiredRole="employer"><EmployerRatings /></ProtectedRoute>} />
 
-                {/* ── Admin ───────────────────────────────────────────── */}
-                <Route path="/admin/dashboard"  element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
-                <Route path="/admin/users"      element={<ProtectedRoute requiredRole="admin"><AdminUsers /></ProtectedRoute>} />
-                <Route path="/admin/jobs"       element={<ProtectedRoute requiredRole="admin"><AdminJobs /></ProtectedRoute>} />
-                <Route path="/admin/reports"    element={<ProtectedRoute requiredRole="admin"><AdminReports /></ProtectedRoute>} />
-                <Route path="/admin/categories" element={<ProtectedRoute requiredRole="admin"><AdminCategories /></ProtectedRoute>} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </NotificationContext.Provider>
-      </AuthContext.Provider>
+              {/* ── Admin ───────────────────────────────────────────── */}
+              <Route path="/admin/dashboard"  element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/users"      element={<ProtectedRoute requiredRole="admin"><AdminUsers /></ProtectedRoute>} />
+              <Route path="/admin/jobs"       element={<ProtectedRoute requiredRole="admin"><AdminJobs /></ProtectedRoute>} />
+              <Route path="/admin/reports"    element={<ProtectedRoute requiredRole="admin"><AdminReports /></ProtectedRoute>} />
+              <Route path="/admin/categories" element={<ProtectedRoute requiredRole="admin"><AdminCategories /></ProtectedRoute>} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

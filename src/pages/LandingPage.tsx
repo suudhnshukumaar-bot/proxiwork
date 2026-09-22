@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -17,7 +17,6 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemText,
   Avatar,
   Divider,
 } from '@mui/material';
@@ -104,7 +103,7 @@ const EMPLOYER_BENEFITS = [
   { icon: <SpeedOutlined />, title: 'Hire in Hours', desc: 'Post a job and have applicants the same day.' },
   { icon: <VerifiedUserOutlined />, title: 'Verified Workers', desc: 'All workers are ID-verified and reviewed by the community.' },
   { icon: <ThumbUpOutlined />, title: 'Quality Guaranteed', desc: 'Ratings and reviews ensure you get the best candidates.' },
-  { icon: <SecurityOutlined />, title: 'Secure & Compliant', desc: 'Built-in agreements and dispute support so you're protected.' },
+  { icon: <SecurityOutlined />, title: 'Secure & Compliant', desc: "Built-in agreements and dispute support so you're protected." },
 ];
 
 const TESTIMONIALS = [
