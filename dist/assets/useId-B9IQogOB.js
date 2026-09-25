@@ -1,0 +1,1 @@
+import{r as e}from"./jsx-runtime-DAs1UGHr.js";import{ut as t}from"./Typography-C0aLz4wF.js";var n=e(t()),r=0;function i(e){let[t,i]=n.useState(e),a=e||t;return n.useEffect(()=>{t??(r+=1,i(`mui-${r}`))},[t]),a}var a={...n}.useId;function o(e){if(a!==void 0){let t=a();return e??t}return i(e)}var s=o;export{o as n,s as t};

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DAs1UGHr.js";var t=e();function n(){return(0,t.jsxs)(`div`,{style:{padding:`50px`,textAlign:`center`},children:[(0,t.jsx)(`h1`,{children:`WorkerOnboarding`}),(0,t.jsx)(`p`,{children:`This is a placeholder page.`})]})}export{n as default};

@@ -1,0 +1,1 @@
+import{r as e}from"./jsx-runtime-DAs1UGHr.js";import{ut as t}from"./Typography-C0aLz4wF.js";var n=e(t());function r(e,t){return n.isValidElement(e)&&t.indexOf(e.type.muiName??e.type?._payload?.value?.muiName)!==-1}export{r as t};

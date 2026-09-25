@@ -1,0 +1,1 @@
+import{r as e,t}from"./jsx-runtime-DAs1UGHr.js";import{ut as n}from"./Typography-C0aLz4wF.js";var r=e(n()),i=t(),a=r.createContext();function o({value:e,...t}){return(0,i.jsx)(a.Provider,{value:e??!0,...t})}var s=()=>r.useContext(a)??!1;export{s as n,o as t};
