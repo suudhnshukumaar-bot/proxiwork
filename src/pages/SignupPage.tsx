@@ -78,8 +78,8 @@ export default function SignupPage() {
         }
       }
 
-      // Navigate to the correct dashboard based on role
-      navigate(selectedRole === 'employer' ? '/employer/dashboard' : '/worker/dashboard');
+      // Navigate to ONBOARDING first (not dashboard) so new users fill their profile
+      navigate(selectedRole === 'employer' ? '/employer/onboarding' : '/worker/onboarding');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'An error occurred during signup';
       setAuthError(message);

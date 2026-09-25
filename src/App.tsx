@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import theme from './theme';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { NotificationProvider } from './contexts/NotificationContext';
+import DashboardLayout from './components/DashboardLayout';
 
 // ─── Lazy Page Imports ────────────────────────────────────────────────────────
 
@@ -111,50 +113,52 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthProvider>
-        <BrowserRouter>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* ── Public ──────────────────────────────────────────── */}
-              <Route path="/"               element={<LandingPage />} />
-              <Route path="/login"          element={<LoginPage />} />
-              <Route path="/signup"         element={<SignupPage />} />
-              <Route path="/signup/worker"  element={<SignupPage />} />
-              <Route path="/signup/employer"element={<SignupPage />} />
-              <Route path="/forgot-password"element={<ForgotPasswordPage />} />
-              <Route path="/verify-email"   element={<VerifyEmailPage />} />
+        <NotificationProvider>
+          <BrowserRouter>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* ── Public ──────────────────────────────────────────── */}
+                <Route path="/"               element={<LandingPage />} />
+                <Route path="/login"          element={<LoginPage />} />
+                <Route path="/signup"         element={<SignupPage />} />
+                <Route path="/signup/worker"  element={<SignupPage />} />
+                <Route path="/signup/employer"element={<SignupPage />} />
+                <Route path="/forgot-password"element={<ForgotPasswordPage />} />
+                <Route path="/verify-email"   element={<VerifyEmailPage />} />
 
-              {/* ── Worker ──────────────────────────────────────────── */}
-              <Route path="/worker/onboarding"   element={<ProtectedRoute requiredRole="worker"><WorkerOnboarding /></ProtectedRoute>} />
-              <Route path="/worker/dashboard"    element={<ProtectedRoute requiredRole="worker"><WorkerDashboard /></ProtectedRoute>} />
-              <Route path="/worker/jobs"         element={<ProtectedRoute requiredRole="worker"><NearbyJobs /></ProtectedRoute>} />
-              <Route path="/worker/jobs/:id"     element={<ProtectedRoute requiredRole="worker"><JobDetailPage /></ProtectedRoute>} />
-              <Route path="/worker/applications" element={<ProtectedRoute requiredRole="worker"><MyApplications /></ProtectedRoute>} />
-              <Route path="/worker/my-jobs"      element={<ProtectedRoute requiredRole="worker"><MyJobs /></ProtectedRoute>} />
-              <Route path="/worker/earnings"     element={<ProtectedRoute requiredRole="worker"><Earnings /></ProtectedRoute>} />
-              <Route path="/worker/ratings"      element={<ProtectedRoute requiredRole="worker"><WorkerRatings /></ProtectedRoute>} />
-              <Route path="/worker/profile"      element={<ProtectedRoute requiredRole="worker"><WorkerProfilePage /></ProtectedRoute>} />
-              <Route path="/worker/notifications"element={<ProtectedRoute requiredRole="worker"><Notifications /></ProtectedRoute>} />
+                {/* ── Worker ──────────────────────────────────────────── */}
+                <Route path="/worker/onboarding"   element={<ProtectedRoute requiredRole="worker"><DashboardLayout><WorkerOnboarding /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/dashboard"    element={<ProtectedRoute requiredRole="worker"><DashboardLayout><WorkerDashboard /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/jobs"         element={<ProtectedRoute requiredRole="worker"><DashboardLayout><NearbyJobs /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/jobs/:id"     element={<ProtectedRoute requiredRole="worker"><DashboardLayout><JobDetailPage /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/applications" element={<ProtectedRoute requiredRole="worker"><DashboardLayout><MyApplications /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/my-jobs"      element={<ProtectedRoute requiredRole="worker"><DashboardLayout><MyJobs /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/earnings"     element={<ProtectedRoute requiredRole="worker"><DashboardLayout><Earnings /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/ratings"      element={<ProtectedRoute requiredRole="worker"><DashboardLayout><WorkerRatings /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/profile"      element={<ProtectedRoute requiredRole="worker"><DashboardLayout><WorkerProfilePage /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/worker/notifications"element={<ProtectedRoute requiredRole="worker"><DashboardLayout><Notifications /></DashboardLayout></ProtectedRoute>} />
 
-              {/* ── Employer ────────────────────────────────────────── */}
-              <Route path="/employer/onboarding"       element={<ProtectedRoute requiredRole="employer"><EmployerOnboarding /></ProtectedRoute>} />
-              <Route path="/employer/dashboard"        element={<ProtectedRoute requiredRole="employer"><EmployerDashboard /></ProtectedRoute>} />
-              <Route path="/employer/post-job"         element={<ProtectedRoute requiredRole="employer"><PostJob /></ProtectedRoute>} />
-              <Route path="/employer/jobs"             element={<ProtectedRoute requiredRole="employer"><EmployerJobs /></ProtectedRoute>} />
-              <Route path="/employer/jobs/:id"         element={<ProtectedRoute requiredRole="employer"><EmployerJobDetail /></ProtectedRoute>} />
-              <Route path="/employer/applicants/:jobId"element={<ProtectedRoute requiredRole="employer"><Applicants /></ProtectedRoute>} />
-              <Route path="/employer/profile"          element={<ProtectedRoute requiredRole="employer"><EmployerProfilePage /></ProtectedRoute>} />
-              <Route path="/employer/notifications"    element={<ProtectedRoute requiredRole="employer"><Notifications /></ProtectedRoute>} />
-              <Route path="/employer/ratings"          element={<ProtectedRoute requiredRole="employer"><EmployerRatings /></ProtectedRoute>} />
+                {/* ── Employer ────────────────────────────────────────── */}
+                <Route path="/employer/onboarding"       element={<ProtectedRoute requiredRole="employer"><DashboardLayout><EmployerOnboarding /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/dashboard"        element={<ProtectedRoute requiredRole="employer"><DashboardLayout><EmployerDashboard /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/post-job"         element={<ProtectedRoute requiredRole="employer"><DashboardLayout><PostJob /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/jobs"             element={<ProtectedRoute requiredRole="employer"><DashboardLayout><EmployerJobs /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/jobs/:id"         element={<ProtectedRoute requiredRole="employer"><DashboardLayout><EmployerJobDetail /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/applicants/:jobId"element={<ProtectedRoute requiredRole="employer"><DashboardLayout><Applicants /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/profile"          element={<ProtectedRoute requiredRole="employer"><DashboardLayout><EmployerProfilePage /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/notifications"    element={<ProtectedRoute requiredRole="employer"><DashboardLayout><Notifications /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/employer/ratings"          element={<ProtectedRoute requiredRole="employer"><DashboardLayout><EmployerRatings /></DashboardLayout></ProtectedRoute>} />
 
-              {/* ── Admin ───────────────────────────────────────────── */}
-              <Route path="/admin/dashboard"  element={<ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>} />
-              <Route path="/admin/users"      element={<ProtectedRoute requiredRole="admin"><AdminUsers /></ProtectedRoute>} />
-              <Route path="/admin/jobs"       element={<ProtectedRoute requiredRole="admin"><AdminJobs /></ProtectedRoute>} />
-              <Route path="/admin/reports"    element={<ProtectedRoute requiredRole="admin"><AdminReports /></ProtectedRoute>} />
-              <Route path="/admin/categories" element={<ProtectedRoute requiredRole="admin"><AdminCategories /></ProtectedRoute>} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
+                {/* ── Admin ───────────────────────────────────────────── */}
+                <Route path="/admin/dashboard"  element={<ProtectedRoute requiredRole="admin"><DashboardLayout><AdminDashboard /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/admin/users"      element={<ProtectedRoute requiredRole="admin"><DashboardLayout><AdminUsers /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/admin/jobs"       element={<ProtectedRoute requiredRole="admin"><DashboardLayout><AdminJobs /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/admin/reports"    element={<ProtectedRoute requiredRole="admin"><DashboardLayout><AdminReports /></DashboardLayout></ProtectedRoute>} />
+                <Route path="/admin/categories" element={<ProtectedRoute requiredRole="admin"><DashboardLayout><AdminCategories /></DashboardLayout></ProtectedRoute>} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </NotificationProvider>
       </AuthProvider>
     </ThemeProvider>
   );

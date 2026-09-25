@@ -8,7 +8,7 @@ let theme = createTheme({
       main: '#0F3460', // dark blue
     },
     secondary: {
-      main: '#FFC107', // bold yellow
+      main: '#00B4A6', // teal (matches LandingPage brand color)
     },
     background: {
       default: '#F8FAFC',

@@ -85,7 +85,7 @@ export interface Job {
   end_date: string | null;
   start_time: string | null;
   end_time: string | null;
-  working_days: string | null;
+  working_days: number;
   payment_type: 'hourly' | 'daily' | 'fixed';
   payment_amount: number | null;
   workers_required: number;
