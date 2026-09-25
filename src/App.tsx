@@ -114,7 +114,7 @@ export default function App() {
       <CssBaseline />
       <AuthProvider>
         <NotificationProvider>
-          <BrowserRouter>
+          <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 {/* ── Public ──────────────────────────────────────────── */}

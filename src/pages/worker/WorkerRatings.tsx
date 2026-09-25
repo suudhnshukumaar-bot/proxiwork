@@ -1,8 +1,17 @@
+import { Avatar, Box, Card, CardContent, Chip, Grid, Rating, Stack, Typography } from '@mui/material';
+import { Star } from '@mui/icons-material';
+
+const reviews = [
+  { name: 'Anita Sharma', business: 'City Mart', job: 'Packing Associate', date: 'Sep 22, 2026', stars: 5, review: 'Suyash was punctual and careful with every order. We would be happy to work with him again.' },
+  { name: 'Rohit Kulkarni', business: 'Shree General Store', job: 'Store Assistant', date: 'Sep 18, 2026', stars: 5, review: 'Very helpful with customers and quick to learn the inventory process.' },
+  { name: 'Meera Joshi', business: 'Fresh Food Corner', job: 'Counter Assistant', date: 'Sep 12, 2026', stars: 4, review: 'Friendly, reliable support during a busy evening shift.' },
+];
+
 export default function WorkerRatings() {
-  return (
-    <div style={{ padding: '50px', textAlign: 'center' }}>
-      <h1>WorkerRatings</h1>
-      <p>This is a placeholder page.</p>
-    </div>
-  );
+  return <Box sx={{ minHeight: '100%', bgcolor: '#f7f9fc', p: { xs: 2, md: 4 } }}>
+    <Typography variant="h4" sx={{ color: '#12395f', fontWeight: 800 }}>Ratings & Reviews</Typography><Typography color="text.secondary" sx={{ mt: 0.5, mb: 3 }}>Feedback from employers you’ve worked with.</Typography>
+    <Grid container spacing={2} sx={{ mb: 3 }}><Grid size={{ xs: 12, md: 4 }}><Card elevation={0} sx={{ height: '100%', border: '1px solid #e4e7ec', borderRadius: 3 }}><CardContent sx={{ textAlign: 'center', py: 3 }}><Typography variant="body2" color="text.secondary">Overall rating</Typography><Stack direction="row" justifyContent="center" alignItems="center" spacing={0.5} sx={{ mt: 1 }}><Typography variant="h3" fontWeight={800} color="#12395f">4.8</Typography><Star sx={{ color: '#f5a623', fontSize: 30 }} /></Stack><Rating value={4.8} precision={0.1} readOnly sx={{ mt: 0.5 }} /><Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>Based on 9 employer reviews</Typography></CardContent></Card></Grid><Grid size={{ xs: 12, md: 8 }}><Card elevation={0} sx={{ height: '100%', border: '1px solid #e4e7ec', borderRadius: 3 }}><CardContent sx={{ p: { xs: 2, md: 3 } }}><Typography variant="h6" fontWeight={700} color="#12395f" sx={{ mb: 1.5 }}>Rating breakdown</Typography>{[[5, 7], [4, 2], [3, 0], [2, 0], [1, 0]].map(([stars, count]) => <Stack key={stars} direction="row" alignItems="center" spacing={1} sx={{ mb: 0.8 }}><Typography variant="body2" sx={{ width: 38 }}>{stars} star</Typography><Box sx={{ flex: 1, height: 8, bgcolor: '#eef0f4', borderRadius: 5, overflow: 'hidden' }}><Box sx={{ height: '100%', width: `${(count / 9) * 100}%`, bgcolor: '#f5a623', borderRadius: 5 }} /></Box><Typography variant="body2" color="text.secondary" sx={{ width: 20, textAlign: 'right' }}>{count}</Typography></Stack>)}</CardContent></Card></Grid></Grid>
+    <Typography variant="h6" fontWeight={700} color="#12395f" sx={{ mb: 1.5 }}>Recent reviews</Typography><Stack spacing={2}>{reviews.map((review) => <Card key={review.name} elevation={0} sx={{ border: '1px solid #e4e7ec', borderRadius: 3 }}><CardContent sx={{ p: { xs: 2, md: 2.5 } }}><Stack direction="row" spacing={1.5} alignItems="flex-start"><Avatar sx={{ bgcolor: '#e9fbf8', color: '#008f85', fontWeight: 700 }}>{review.name.split(' ').map((part) => part[0]).join('')}</Avatar><Box sx={{ flex: 1 }}><Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" spacing={0.5}><Box><Typography fontWeight={700} color="#12395f">{review.name}</Typography><Typography variant="body2" color="text.secondary">{review.business} · {review.job}</Typography></Box><Typography variant="caption" color="text.secondary">{review.date}</Typography></Stack><Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 1 }}><Rating value={review.stars} readOnly size="small" /><Chip size="small" label={`${review.stars}.0`} sx={{ bgcolor: '#fff8e7', color: '#9a6700', fontWeight: 700 }} /></Stack><Typography variant="body2" sx={{ mt: 1.2 }}>{review.review}</Typography></Box></Stack></CardContent></Card>)}</Stack>
+    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2 }}>These sample reviews are for preview only.</Typography>
+  </Box>;
 }
