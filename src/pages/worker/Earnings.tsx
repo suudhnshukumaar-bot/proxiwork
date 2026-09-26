@@ -12,7 +12,7 @@ function Stat({ title, amount, note }: { title: string; amount: string; note: st
 }
 
 export default function Earnings() {
-  return <Box sx={{ minHeight: '100%', bgcolor: '#f7f9fc', p: { xs: 2, md: 4 } }}>
+  return <Box sx={{ minHeight: '100%', bgcolor: '#EAF5FE', p: { xs: 2, md: 4 } }}>
     <Typography variant="h4" sx={{ color: '#12395f', fontWeight: 800 }}>Earnings</Typography><Typography color="text.secondary" sx={{ mt: 0.5, mb: 3 }}>A clear view of your work income and recent payments.</Typography>
     <Grid container spacing={2} sx={{ mb: 3 }}><Grid size={{ xs: 12, sm: 6, lg: 4 }}><Stat title="Earned this month" amount="₹8,450" note="12 completed shifts" /></Grid><Grid size={{ xs: 12, sm: 6, lg: 4 }}><Stat title="Payments received" amount="₹7,500" note="Deposited to your account" /></Grid><Grid size={{ xs: 12, sm: 6, lg: 4 }}><Stat title="Pending payment" amount="₹950" note="Expected after shift confirmation" /></Grid></Grid>
     <Card elevation={0} sx={{ border: '1px solid #e4e7ec', borderRadius: 3 }}><CardContent sx={{ p: { xs: 2, md: 3 } }}><Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}><Box><Typography variant="h6" color="#12395f" fontWeight={700}>Recent payments</Typography><Typography variant="body2" color="text.secondary">Your latest shift earnings.</Typography></Box><CurrencyRupee sx={{ color: '#00a99d' }} /></Stack>

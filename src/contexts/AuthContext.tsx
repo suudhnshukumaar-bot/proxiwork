@@ -23,7 +23,7 @@ interface AuthContextValue {
     email: string,
     password: string,
     role: 'worker' | 'employer',
-  ) => Promise<{ error: Error | null; userId: string | null }>;
+  ) => Promise<{ error: Error | null; userId: string | null; hasSession: boolean }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -113,7 +113,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           data: { role },
         },
       });
-      return { error: error as Error | null, userId: data.user?.id ?? null };
+      return {
+        error: error as Error | null,
+        userId: data.user?.id ?? null,
+        hasSession: Boolean(data.session),
+      };
     },
     [],
   );

@@ -15,8 +15,8 @@ import {
 import { useAuth } from '../contexts/AuthContext';
 import { useNotifications } from '../contexts/NotificationContext';
 
-const PRIMARY = '#0F3460';
-const SECONDARY = '#00B4A6';
+const PRIMARY = '#1B5B91';
+const SECONDARY = '#0AAE9E';
 
 const WORKER_LINKS = [
   { label: 'Dashboard',    icon: <DashboardOutlined />,    path: '/worker/dashboard' },
@@ -101,7 +101,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)' }} />
         <Box sx={{ p: 2 }}>
           <Chip
-            label={role?.toUpperCase()}
+            label={role === 'worker' ? 'ProxiTasker' : role.toUpperCase()}
             size="small"
             sx={{ bgcolor: roleBadgeColor, color: '#fff', fontWeight: 700 }}
           />
@@ -120,7 +120,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     bgcolor: active ? 'rgba(0,180,166,0.15)' : 'transparent',
                     borderLeft: active ? `3px solid ${SECONDARY}` : '3px solid transparent',
                     color: active ? SECONDARY : 'rgba(255,255,255,0.75)',
-                    '&:hover': { bgcolor: 'rgba(255,255,255,0.05)', color: '#fff' },
+                    borderRadius: '0 12px 12px 0',
+                    mx: 1,
+                    width: 'calc(100% - 8px)',
+                    transition: 'background-color 180ms ease, color 180ms ease, transform 180ms ease',
+                    '&:hover': { bgcolor: 'rgba(255,255,255,0.08)', color: '#fff', transform: 'translateX(3px)' },
                   }}
                 >
                   <ListItemIcon sx={{ minWidth: 0, mr: drawerOpen ? 2 : 'auto', color: 'inherit' }}>
@@ -145,7 +149,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <AppBar
           position="sticky"
           sx={{
-            bgcolor: '#fff',
+            bgcolor: '#F1F8FF',
             color: PRIMARY,
             boxShadow: 'none',
             borderBottom: '1px solid rgba(15,52,96,0.08)',
@@ -158,7 +162,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
             <Tooltip title="Notifications">
               <IconButton onClick={() => navigate(`/${role}/notifications`)} sx={{ mr: 1 }}>
-                <Badge badgeContent={unreadCount} color="error" max={99}>
+                  <Badge badgeContent={unreadCount} color="error" max={99} sx={{ '& .MuiBadge-badge': unreadCount ? { animation: 'notification-pop 2s ease-in-out infinite', '@keyframes notification-pop': { '0%,100%': { boxShadow: '0 0 0 0 rgba(211,47,47,.28)' }, '50%': { boxShadow: '0 0 0 5px rgba(211,47,47,0)' } }, '@media (prefers-reduced-motion: reduce)': { animation: 'none' } } : {} }}>
                   <NotificationsOutlined />
                 </Badge>
               </IconButton>
@@ -192,8 +196,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </AppBar>
 
         {/* Page Content */}
-        <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, sm: 3, md: 4 } }}>
-          {children}
+        <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, sm: 3, md: 4 }, overflow: 'hidden' }}>
+          <Box key={location.pathname} sx={{ animation: 'page-arrive 420ms cubic-bezier(.2,.75,.25,1) both', '@media (prefers-reduced-motion: reduce)': { animation: 'none' }, '@keyframes page-arrive': { from: { opacity: 0, transform: 'translateY(12px) scale(.995)' }, to: { opacity: 1, transform: 'translateY(0) scale(1)' } } }}>
+            {children}
+          </Box>
         </Box>
       </Box>
     </Box>

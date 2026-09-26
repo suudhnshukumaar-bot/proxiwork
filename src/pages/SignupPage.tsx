@@ -42,6 +42,7 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [authSuccess, setAuthSuccess] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<'worker' | 'employer' | null>(null);
 
   const {
@@ -55,15 +56,21 @@ export default function SignupPage() {
   const onSubmit = async (data: SignupFormValues) => {
     try {
       setAuthError(null);
+      setAuthSuccess(null);
       if (!selectedRole) {
         setAuthError('Please select a role.');
         return;
       }
 
-      const { error: signUpError, userId } = await signUp(data.email, data.password, selectedRole);
+      const { error: signUpError, userId, hasSession } = await signUp(data.email, data.password, selectedRole);
 
       if (signUpError) {
         throw signUpError;
+      }
+
+      if (!hasSession) {
+        setAuthSuccess('Check your email for a confirmation link. After confirming your address, sign in to continue.');
+        return;
       }
 
       // Use the userId returned directly from signUp — avoids getUser() race condition
@@ -78,8 +85,7 @@ export default function SignupPage() {
         }
       }
 
-      // Navigate to ONBOARDING first (not dashboard) so new users fill their profile
-      navigate(selectedRole === 'employer' ? '/employer/onboarding' : '/worker/onboarding');
+      navigate(selectedRole === 'employer' ? '/employer/onboarding' : '/worker/dashboard');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'An error occurred during signup';
       setAuthError(message);
@@ -156,7 +162,7 @@ export default function SignupPage() {
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 {selectedRole
-                  ? `Sign up as a ${selectedRole === 'worker' ? 'Worker' : 'Employer'} to get started.`
+                  ? `Sign up as a ${selectedRole === 'worker' ? 'ProxiTasker' : 'Employer'} to get started.`
                   : 'How would you like to use ProxiWork?'}
               </Typography>
             </Box>
@@ -177,7 +183,7 @@ export default function SignupPage() {
                   <CardActionArea onClick={() => setSelectedRole('worker')} sx={{ height: '100%' }}>
                     <CardContent sx={{ textAlign: 'center', py: 5 }}>
                       <WorkOutline sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
-                      <Typography variant="h5" gutterBottom fontWeight="bold">I am a Worker</Typography>
+                      <Typography variant="h5" gutterBottom fontWeight="bold">I am a ProxiTasker</Typography>
                       <Typography variant="body2" color="text.secondary">
                         Find flexible local jobs, offer your skills, and earn money in your community.
                       </Typography>
@@ -212,6 +218,11 @@ export default function SignupPage() {
                 {authError && (
                   <Alert severity="error" sx={{ mb: 3 }}>
                     {authError}
+                  </Alert>
+                )}
+                {authSuccess && (
+                  <Alert severity="success" sx={{ mb: 3 }}>
+                    {authSuccess}
                   </Alert>
                 )}
 

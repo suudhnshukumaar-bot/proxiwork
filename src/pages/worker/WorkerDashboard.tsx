@@ -18,9 +18,14 @@ function SummaryCard({ label, value, hint, icon }: { label: string; value: strin
 }
 
 export default function WorkerDashboard() {
-  return <Box sx={{ minHeight: '100%', bgcolor: '#f7f9fc', p: { xs: 2, md: 4 } }}>
+  return <Box sx={{ minHeight: '100%', bgcolor: '#EAF5FE', p: { xs: 2, md: 4 } }}>
+    <Box sx={{ position: 'relative', overflow: 'hidden', mb: 3, p: { xs: 2.5, md: 3 }, minHeight: 110, borderRadius: 4, color: '#fff', background: 'linear-gradient(115deg, #2878B5 0%, #2585A5 66%, #11927F 100%)', boxShadow: '0 18px 44px rgba(15,52,96,.13)', '@keyframes drift': { '0%,100%': { transform: 'translateY(0) rotate(-7deg)' }, '50%': { transform: 'translateY(-11px) rotate(2deg)' } }, '@keyframes orbit': { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } }, '@media (prefers-reduced-motion: reduce)': { '& .dashboard-orbit, & .dashboard-float': { animation: 'none !important' } } }}>
+      <Box className="dashboard-orbit" aria-hidden="true" sx={{ position: 'absolute', width: 270, height: 270, right: { xs: -140, md: 110 }, top: -95, border: '1px solid rgba(255,255,255,.2)', borderRadius: '50%', animation: 'orbit 28s linear infinite', '&:before': { content: '""', position: 'absolute', width: 12, height: 12, top: 34, left: 35, borderRadius: '50%', bgcolor: '#6ce6d7', boxShadow: '0 0 22px #6ce6d7' } }} />
+      <Box className="dashboard-float" sx={{ display: { xs: 'none', sm: 'block' }, position: 'absolute', right: { sm: 30, md: 60 }, top: 26, p: 1.4, borderRadius: 3, bgcolor: 'rgba(255,255,255,.13)', border: '1px solid rgba(255,255,255,.2)', backdropFilter: 'blur(12px)', transform: 'rotate(-5deg)', animation: 'drift 5s ease-in-out infinite' }}><Stack direction="row" spacing={1} alignItems="center"><Avatar sx={{ bgcolor: '#c9fff2', color: '#087e75', width: 34, height: 34 }}><Star fontSize="small" /></Avatar><Box><Typography variant="caption" sx={{ opacity: .8, display: 'block' }}>Your reputation</Typography><Typography fontWeight={800}>4.8 ★ <Typography component="span" variant="caption" sx={{ opacity: .8 }}>Excellent</Typography></Typography></Box></Stack></Box>
+      <Typography variant="overline" sx={{ position: 'relative', zIndex: 1, letterSpacing: 2, color: '#a8eee3', fontWeight: 700 }}>YOUR WORKSPACE · READY TO GROW</Typography>
+    </Box>
     <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={2} sx={{ mb: 3 }}>
-      <Box><Typography variant="h4" sx={{ color: navy, fontWeight: 800 }}>Good morning, Suyash</Typography><Typography color="text.secondary" sx={{ mt: 0.5 }}>Here’s what’s happening with your work this week.</Typography></Box>
+      <Box><Typography variant="h4" sx={{ color: navy, fontWeight: 800 }}>Hii!! ProxiTasker</Typography><Typography color="text.secondary" sx={{ mt: 0.5 }}>Here’s what’s happening with your work this week.</Typography></Box>
       <Button component={RouterLink} to="/worker/jobs" variant="contained" endIcon={<ArrowForward />} sx={{ bgcolor: teal, '&:hover': { bgcolor: '#008f85' } }}>Find work</Button>
     </Stack>
     <Grid container spacing={2} sx={{ mb: 3 }}>

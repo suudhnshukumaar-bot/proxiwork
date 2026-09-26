@@ -47,10 +47,10 @@ import {
   SpeedOutlined,
 } from '@mui/icons-material';
 
-const PRIMARY = '#0F3460';
-const SECONDARY = '#00B4A6';
-const PRIMARY_DARK = '#0a2444';
-const PRIMARY_LIGHT = '#1a4a8a';
+const PRIMARY = '#1B5B91';
+const SECONDARY = '#0AAE9E';
+const PRIMARY_DARK = '#17466D';
+const PRIMARY_LIGHT = '#3B80B4';
 
 const NAV_LINKS = [
   { label: 'How It Works', href: '#how-it-works' },
@@ -125,13 +125,13 @@ export default function LandingPage() {
   };
 
   return (
-    <Box sx={{ bgcolor: '#ffffff', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: '#EAF5FE', minHeight: '100vh' }}>
       {/* ── NAVBAR ── */}
       <AppBar
         position="sticky"
         elevation={0}
         sx={{
-          bgcolor: 'rgba(255,255,255,0.92)',
+          bgcolor: 'rgba(234,245,254,0.94)',
           backdropFilter: 'blur(12px)',
           borderBottom: '1px solid rgba(15,52,96,0.08)',
         }}
@@ -374,7 +374,7 @@ export default function LandingPage() {
       </Box>
 
       {/* ── HOW IT WORKS – WORKERS ── */}
-      <Box id="how-it-works" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#f8fafc' }}>
+      <Box id="how-it-works" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#EAF5FE' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 7 }}>
             <Chip label="For Workers" sx={{ bgcolor: `${SECONDARY}1a`, color: SECONDARY, fontWeight: 700, mb: 2 }} />
@@ -454,14 +454,14 @@ export default function LandingPage() {
               onClick={() => navigate('/signup/worker')}
               sx={{ bgcolor: SECONDARY, '&:hover': { bgcolor: '#009e91' }, fontWeight: 700, textTransform: 'none', borderRadius: 3, px: 4, py: 1.4, boxShadow: 'none' }}
             >
-              Sign Up as a Worker
+              Sign Up To Become ProxiTasker
             </Button>
           </Box>
         </Container>
       </Box>
 
       {/* ── HOW IT WORKS – EMPLOYERS ── */}
-      <Box id="for-employers" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#fff' }}>
+      <Box id="for-employers" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#F5FAFF' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 7 }}>
             <Chip label="For Employers" sx={{ bgcolor: `${PRIMARY}14`, color: PRIMARY, fontWeight: 700, mb: 2 }} />
@@ -541,14 +541,14 @@ export default function LandingPage() {
               onClick={() => navigate('/signup/employer')}
               sx={{ bgcolor: PRIMARY, '&:hover': { bgcolor: PRIMARY_DARK }, fontWeight: 700, textTransform: 'none', borderRadius: 3, px: 4, py: 1.4, boxShadow: 'none' }}
             >
-              Post Your First Job
+              Post Job
             </Button>
           </Box>
         </Container>
       </Box>
 
       {/* ── JOB CATEGORIES ── */}
-      <Box id="categories" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#f8fafc' }}>
+      <Box id="categories" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#EAF5FE' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 7 }}>
             <Typography variant="h3" fontWeight={800} sx={{ color: PRIMARY, fontSize: { xs: '1.9rem', md: '2.5rem' }, mb: 1.5 }}>
@@ -605,7 +605,7 @@ export default function LandingPage() {
       </Box>
 
       {/* ── BENEFITS ── */}
-      <Box id="for-workers" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#fff' }}>
+      <Box id="for-workers" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#F5FAFF' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 7 }}>
             <Typography variant="h3" fontWeight={800} sx={{ color: PRIMARY, fontSize: { xs: '1.9rem', md: '2.5rem' }, mb: 1.5 }}>
@@ -629,7 +629,7 @@ export default function LandingPage() {
                     <WorkOutline />
                   </Box>
                   <Typography variant="h5" fontWeight={800} sx={{ color: PRIMARY }}>
-                    For Workers
+                    Find Work
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -663,7 +663,7 @@ export default function LandingPage() {
                     <StorefrontOutlined />
                   </Box>
                   <Typography variant="h5" fontWeight={800} sx={{ color: PRIMARY }}>
-                    For Employers
+                    Hire Someone
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
@@ -689,7 +689,7 @@ export default function LandingPage() {
       <Box
         sx={{
           py: { xs: 8, md: 12 },
-          bgcolor: '#f8fafc',
+          bgcolor: '#EAF5FE',
         }}
       >
         <Container maxWidth="lg">

@@ -5,14 +5,14 @@ let theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0F3460', // dark blue
+      main: '#1B5B91', // clear, mid-tone blue
     },
     secondary: {
-      main: '#00B4A6', // teal (matches LandingPage brand color)
+      main: '#0AAE9E', // fresh green-teal accent
     },
     background: {
-      default: '#F8FAFC',
-      paper: '#FFFFFF',
+      default: '#EAF5FE',
+      paper: '#F5FAFF',
     },
   },
 });
@@ -111,7 +111,9 @@ theme = createTheme(theme, {
           },
           '&:active': {
             boxShadow: 'none',
+            transform: 'scale(.97)',
           },
+          transition: 'transform 180ms ease, background-color 180ms ease, box-shadow 180ms ease',
         },
       },
       defaultProps: {
@@ -124,6 +126,8 @@ theme = createTheme(theme, {
           boxShadow: 'none',
           border: `1px solid ${t.palette.divider}`,
           borderRadius: t.shape.borderRadius,
+          transition: 'transform 220ms cubic-bezier(.2,.75,.25,1), box-shadow 220ms ease, border-color 220ms ease',
+          '&:hover': { transform: 'translateY(-3px)', boxShadow: '0 14px 32px rgba(15,52,96,.08)', borderColor: 'rgba(0,180,166,.32)' },
         }),
       },
       defaultProps: {
@@ -165,6 +169,7 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           borderRadius: 8,
+          backgroundColor: '#F5FAFF',
         },
       },
     },

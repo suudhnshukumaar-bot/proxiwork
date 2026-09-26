@@ -146,7 +146,7 @@ export default function WorkerProfilePage() {
     setNotice(null);
   };
 
-  return <Box sx={{ minHeight: '100%', bgcolor: '#f7f9fc', p: { xs: 2, md: 4 } }}>
+  return <Box sx={{ minHeight: '100%', bgcolor: '#EAF5FE', p: { xs: 2, md: 4 } }}>
     <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={1} sx={{ mb: 3 }}>
       <Box><Typography variant="h4" sx={{ color: '#12395f', fontWeight: 800 }}>My Profile</Typography><Typography color="text.secondary" sx={{ mt: 0.5 }}>Your details help local employers get to know you.</Typography></Box>
       {!editing && <Button variant="contained" startIcon={<EditOutlined />} onClick={() => setEditing(true)} sx={{ bgcolor: '#00B4A6', '&:hover': { bgcolor: '#008f85' } }}>Edit profile</Button>}

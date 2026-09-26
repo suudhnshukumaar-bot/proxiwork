@@ -13,7 +13,7 @@ const toneSx = { success: { bgcolor: '#e9fbf8', color: '#008f85' }, warning: { b
 export default function MyApplications() {
   const [tab, setTab] = useState(0);
   const visible = tab === 1 ? applications.filter((item) => item.status === 'Under review') : tab === 2 ? applications.filter((item) => item.status !== 'Under review') : applications;
-  return <Box sx={{ minHeight: '100%', bgcolor: '#f7f9fc', p: { xs: 2, md: 4 } }}>
+  return <Box sx={{ minHeight: '100%', bgcolor: '#EAF5FE', p: { xs: 2, md: 4 } }}>
     <Typography variant="h4" sx={{ color: '#12395f', fontWeight: 800 }}>My Applications</Typography><Typography color="text.secondary" sx={{ mt: 0.5, mb: 3 }}>Follow the status of jobs you’ve applied for.</Typography>
     <Tabs value={tab} onChange={(_, value: number) => setTab(value)} sx={{ mb: 2, '& .Mui-selected': { color: '#008f85' }, '& .MuiTabs-indicator': { bgcolor: '#00a99d' } }}><Tab label={`All (${applications.length})`} /><Tab label="In review (2)" /><Tab label="Updates (2)" /></Tabs>
     <Stack spacing={2}>{visible.map((item) => <Card key={item.role} elevation={0} sx={{ border: '1px solid #e4e7ec', borderRadius: 3 }}><CardContent sx={{ p: { xs: 2, md: 2.5 } }}>
